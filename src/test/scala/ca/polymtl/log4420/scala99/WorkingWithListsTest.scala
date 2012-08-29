@@ -10,58 +10,138 @@ class WorkingWithListsTest
 {
   "P01(*) last" should "Find the last element of a list." in
   {
-
     pending
+
+    /*
+    scala> last(List(1, 1, 2, 3, 5, 8))
+    res0: Int = 8
+    */
   }
 
   "P02(*) penultimate" should "Find the last but one element of a list." in
   {
     pending
+
+    /*
+    scala> penultimate(List(1, 1, 2, 3, 5, 8))
+    res0: Int = 5
+    */
   }
 
   "P03(*) nth" should "Find the Kth element of a list." in
   {
     info("By convention, the first element in the list is element 0")
+
     pending
+
+    /*
+    scala> nth(2, List(1, 1, 2, 3, 5, 8))
+    res0: Int = 2
+    */
   }
 
   "P04(*) length" should "Find the number of elements of a list." in
   {
     pending
+
+    /*
+    scala> length(List(1, 1, 2, 3, 5, 8))
+    res0: Int = 6
+    */
   }
 
   "P05(*) reverse" should "Reverse a list." in
   {
     pending
+
+    /*
+    scala> reverse(List(1, 1, 2, 3, 5, 8))
+    res0: List[Int] = List(8, 5, 3, 2, 1, 1)
+    */
   }
 
   "P06(*) isPalindrome" should "Find out whether a list is a palindrome." in
   {
+    info("""
+        |A palindrome is a word, phrase, number, or other sequence of units that
+        |may be read the same way in either direction, with general allowances
+        |for adjustments to punctuation and word dividers.[1]
+        |[1]: http://en.wikipedia.org/wiki/Palindrome
+     """.stripMargin)
+
     pending
+
+    /*
+    scala> isPalindrome(List(1, 2, 3, 2, 1))
+    res0: Boolean = true
+    */
   }
 
   "P07(**) flatten" should "Flatten a nested list structure." in
   {
     pending
+
+    /*
+    scala> flatten(List(List(1, 1), 2, List(3, List(5, 8))))
+    res0: List[Any] = List(1, 1, 2, 3, 5, 8)
+    */
   }
 
   "P08 (**) compress" should "Eliminate consecutive duplicates of list elements." in
   {
-  pending
+    info("""
+        |If a list contains repeated elements they should be replaced with
+        |a single copy of the element. The order of the elements should not be changed.
+    """.stripMargin)
+
+    /*
+    scala> compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
+    res0: List[Symbol] = List('a, 'b, 'c, 'a, 'd, 'e)
+    */
+
+    pending
   }
 
   "P09 (**) pack" should "Pack consecutive duplicates of list elements into sublists." in
   {
+    info("If a list contains repeated elements they should be placed in separate sublists.")
+
+    /*
+    scala> pack(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
+    res0: List[List[Symbol]] = List( List('a, 'a, 'a, 'a), List('b), List('c, 'c), List('a, 'a), List('d), List('e, 'e, 'e, 'e))
+    */
+
     pending
   }
 
   "P10 (*) encode" should "Run-length encoding of a list." in
   {
+    info("""
+     |Use the result of problem P09 to implement the so-called run-length encoding data compression method. Given
+     |a run-length code list generated as specified in problem P10, construct its uncompressed version.Consecutive
+     |duplicates of elements are encoded as tuples (N, E) where N is the number of duplicates of the element E.
+    """.stripMargin)
+
+    /*
+    scala> encode(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
+    res0: List[(Int, Symbol)] = List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))
+    */
+
     pending
   }
 
   "P11 (*) encodeModified" should "Modified run-length encoding." in
   {
+    info("""
+       |Modify the result of problem P10 in such a way that if an element has no duplicates it is simply copied into
+       |the result list. Only elements with duplicates are transferred as (N, E) terms.
+     """.stripMargin)
+
+    /*
+    scala> encodeModified(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
+    res0: List[Any] = List((4,'a), 'b, (2,'c), (2,'a), 'd, (4,'e))
+    */
+
     pending
   }
 
