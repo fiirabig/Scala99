@@ -62,12 +62,13 @@ class WorkingWithListsTest
 
   "P06(*) isPalindrome" should "Find out whether a list is a palindrome." in
   {
-    info("""
-        |A palindrome is a word, phrase, number, or other sequence of units that
-        |may be read the same way in either direction, with general allowances
-        |for adjustments to punctuation and word dividers.[1]
-        |[1]: http://en.wikipedia.org/wiki/Palindrome
-     """.stripMargin)
+    /*
+        A palindrome is a word, phrase, number, or other sequence of units that
+        may be read the same way in either direction, with general allowances
+        for adjustments to punctuation and word dividers.[1]
+
+        [1]: http://en.wikipedia.org/wiki/Palindrome
+     */
 
     pending
 
@@ -89,10 +90,6 @@ class WorkingWithListsTest
 
   "P08 (**) compress" should "Eliminate consecutive duplicates of list elements." in
   {
-    info("""
-        |If a list contains repeated elements they should be replaced with
-        |a single copy of the element. The order of the elements should not be changed.
-    """.stripMargin)
 
     /*
     scala> compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
@@ -102,10 +99,18 @@ class WorkingWithListsTest
     pending
   }
 
+  it should "Replace repeated elements with a single copy of the element" in
+  {
+
+  }
+
+  it should "not change the order of the elements" in
+  {
+
+  }
+
   "P09 (**) pack" should "Pack consecutive duplicates of list elements into sublists." in
   {
-    info("If a list contains repeated elements they should be placed in separate sublists.")
-
     /*
     scala> pack(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
     res0: List[List[Symbol]] = List( List('a, 'a, 'a, 'a), List('b), List('c, 'c), List('a, 'a), List('d), List('e, 'e, 'e, 'e))
@@ -114,13 +119,18 @@ class WorkingWithListsTest
     pending
   }
 
-  "P10 (*) encode" should "Run-length encoding of a list." in
+  it should "place repeated elements in separate sublists" in
   {
-    info("""
-     |Use the result of problem P09 to implement the so-called run-length encoding data compression method. Given
-     |a run-length code list generated as specified in problem P10, construct its uncompressed version.Consecutive
-     |duplicates of elements are encoded as tuples (N, E) where N is the number of duplicates of the element E.
-    """.stripMargin)
+
+  }
+
+  "P10 (*) encode" should "encode consecutive duplicates of elements as tuples (N, E)" +
+    "where N is the number of duplicates of the element E." in
+  {
+    /*
+      Use the result of problem P09 to implement the so-called run-length encoding data compression method.
+      Given a run-length code list generated as specified in problem P10, construct its uncompressed version.
+    */
 
     /*
     scala> encode(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
@@ -130,13 +140,8 @@ class WorkingWithListsTest
     pending
   }
 
-  "P11 (*) encodeModified" should "Modified run-length encoding." in
+  "P11 (*) encodeModified" should "encode like P10" in
   {
-    info("""
-       |Modify the result of problem P10 in such a way that if an element has no duplicates it is simply copied into
-       |the result list. Only elements with duplicates are transferred as (N, E) terms.
-     """.stripMargin)
-
     /*
     scala> encodeModified(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
     res0: List[Any] = List((4,'a), 'b, (2,'c), (2,'a), 'd, (4,'e))
@@ -145,10 +150,18 @@ class WorkingWithListsTest
     pending
   }
 
-  "P12 (**) decode" should "Decode a run-length encoded list." in
+  it should "copy single elements into the result lift" in
   {
-    info("Given a run-length code list generated as specified in problem P10, construct its uncompressed version.")
 
+  }
+
+  it should "only transfer elements with duplicates as (N, E) terms" in
+  {
+
+  }
+
+  "P12 (**) decode" should "decode a list encoded in P10" in
+  {
     /*
       scala> decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
       res0: List[Symbol] = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
@@ -378,6 +391,10 @@ class WorkingWithListsTest
        |Again, we suppose that a list contains elements that are lists themselves. But this time the objective is to
        |sort the elements according to their length frequency; i.e. in the default, sorting is done ascendingly,
        |lists with rare lengths are placed, others with a more frequent length come later.
+       |
+       |Note that in the above example, the first two lists in the result have length 4 and 1 and both lengths
+       |appear just once. The third and fourth lists have length 3 and there are two list of this length.
+       |Finally, the last three lists have length 2. This is the most frequent length.
      """.stripMargin)
 
     /*
