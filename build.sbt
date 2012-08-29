@@ -2,7 +2,7 @@ name := "Scala99"
 
 organization := "ca.polymtl.log4420"
 
-scalaVersion := "2.10.0-M7"
+scalaVersion := "2.9.2"
 
 resolvers ++= Seq(
   "snapshots" at "http://oss.sonatype.org/content/repositories/snapshots",
@@ -12,5 +12,5 @@ resolvers ++= Seq(
 scalacOptions ++= Seq("-deprecation", "-unchecked")
 
 libraryDependencies ++= { Seq(
-  "org.scalatest" % "scalatest_2.10.0-M7" % "1.9-2.10.0-M7-B1" % "test"
+  "org.scalatest" %% "scalatest" % "1.8" % "test"
 )}
