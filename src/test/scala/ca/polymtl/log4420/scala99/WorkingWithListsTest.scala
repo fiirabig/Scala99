@@ -8,74 +8,83 @@ class WorkingWithListsTest
   extends FlatSpec
   with ShouldMatchers
 {
+
   "P01(*) last" should "Find the last element of a list." in
   {
-    pending
+    last( List( 1, 1, 2, 3, 5, 8 ) ) should be ( Some( 8 ) )
+  }
 
-    /*
-    scala> last(List(1, 1, 2, 3, 5, 8))
-    res0: Int = 8
-    */
+  it should "None if the list is empty" in
+  {
+    last( List() ) should be ( None )
   }
 
   "P02(*) penultimate" should "Find the last but one element of a list." in
   {
-    pending
+    penultimate( List( 1, 1, 2, 3, 5, 8 ) ) should  be ( Some( 5 ) )
+  }
 
-    /*
-    scala> penultimate(List(1, 1, 2, 3, 5, 8))
-    res0: Int = 5
-    */
+  it should "be None if the list does not contain at least two elements" in
+  {
+    penultimate( List() ) should be ( None )
+    penultimate( List(1) ) should be ( None )
   }
 
   "P03(*) nth" should "Find the Kth element of a list." in
   {
-    info("By convention, the first element in the list is element 0")
+    info( "By convention, the first element in the list is element 0" )
 
-    pending
+    nth( 0, List( 1, 1, 2, 3, 5, 8 ) ) should be ( Some( 1 ) )
+    nth( 1, List( 1, 1, 2, 3, 5, 8 ) ) should be ( Some( 1 ) )
+    nth( 2, List( 1, 1, 2, 3, 5, 8 ) ) should be ( Some( 2 ) )
+  }
 
-    /*
-    scala> nth(2, List(1, 1, 2, 3, 5, 8))
-    res0: Int = 2
-    */
+  it should "be None if the index is out of the bounds of the list" in
+  {
+    nth( -1, List( 1, 2 ) ) should be ( None )
+    nth( 2, List( 1, 2 ) ) should be ( None )
   }
 
   "P04(*) length" should "Find the number of elements of a list." in
   {
-    pending
+    WorkingWithLists.size( List( 1, 1, 2, 3, 5, 8 ) ) should be ( 6 )
+  }
 
-    /*
-    scala> length(List(1, 1, 2, 3, 5, 8))
-    res0: Int = 6
-    */
+  it should "be 0 for an empty list" in
+  {
+    WorkingWithLists.size( List("a") ) should be ( 6 )
   }
 
   "P05(*) reverse" should "Reverse a list." in
   {
-    pending
-
-    /*
-    scala> reverse(List(1, 1, 2, 3, 5, 8))
-    res0: List[Int] = List(8, 5, 3, 2, 1, 1)
-    */
+    reverse( List( 1, 1, 2, 3, 5, 8 ) ) should be (
+      List( 8, 5, 3, 2, 1, 1 )
+    )
   }
 
   "P06(*) isPalindrome" should "Find out whether a list is a palindrome." in
   {
     /*
         A palindrome is a word, phrase, number, or other sequence of units that
-        may be read the same way in either direction, with general allowances
-        for adjustments to punctuation and word dividers.[1]
+        may be read the same way in either direction[1]
 
         [1]: http://en.wikipedia.org/wiki/Palindrome
+
+        we don't allow word diviser and punctuation
      */
 
-    pending
+    assert( isPalindrome( Nil ) )
+    assert( isPalindrome( List( 1 ) ) )
+    assert( isPalindrome( List( 1, 1 ) ) )
+    assert( isPalindrome( List( 1, 1, 1 ) ) )
+    assert( isPalindrome( List( 1, 2, 1 ) ) )
+    assert( isPalindrome( List( 1, 2, 2, 1 ) ) )
+    assert( isPalindrome( List( 1, 2, 1, 2, 1 ) ) )
+    assert( isPalindrome( List( 1, 2, 1, 1, 2, 1 ) ) )
 
-    /*
-    scala> isPalindrome(List(1, 2, 3, 2, 1))
-    res0: Boolean = true
-    */
+    assert( ! isPalindrome( List( 0, 1 ) ) )
+    assert( ! isPalindrome( List( 1, 0 ) ) )
+    assert( ! isPalindrome( List( 1, 0, 0 ) ) )
   }
 
   "P07(**) flatten" should "Flatten a nested list structure." in
