@@ -124,9 +124,10 @@ class WorkingWithListsTest
 
   }
 
-  "P10 (*) encode" should "encode consecutive duplicates of elements as tuples (N, E)" +
-    "where N is the number of duplicates of the element E." in
+  "P10 (*) encode" should "encode consecutive duplicates of elements as tuples (N, E)" in
   {
+
+    info( "where N is the number of duplicates of the element E." )
     /*
       Use the result of problem P09 to implement the so-called run-length encoding data compression method.
       Given a run-length code list generated as specified in problem P10, construct its uncompressed version.
@@ -170,13 +171,11 @@ class WorkingWithListsTest
     pending
   }
 
-  "P13 (**) encodeDirect" should "Run-length encoding of a list (direct solution)." in
+  "P13 (**) encodeDirect" should "encode a list like in P10 without using P09" in
   {
-    info("""
-     |Implement the so-called run-length encoding data compression method directly. I.e. don't use other methods
-     |you've written (like P09's pack); do all the work directly.
-     |""".stripMargin
-    )
+    /*
+     Implement the so-called run-length encoding data compression method directly.
+    */
 
     /*
     scala> encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
@@ -186,7 +185,7 @@ class WorkingWithListsTest
     pending
   }
 
-  "P14 (*) duplicate" should "Duplicate the elements of a list." in
+  "P14 (*) duplicate" should "Duplicate all elements of a list." in
   {
     /*
     scala> duplicate(List('a, 'b, 'c, 'c, 'd))
@@ -218,7 +217,7 @@ class WorkingWithListsTest
 
   "P17 (*) split" should "Split a list into two parts." in
   {
-    info("The length of the first part is given. Use a Tuple for your result.")
+    info("The length of the first part is given.")
 
     /*
     scala> split(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
@@ -228,13 +227,8 @@ class WorkingWithListsTest
     pending
   }
 
-  "P18 (**) slice" should "Extract a slice from a list." in
+  "P18 (**) slice" should "Extract a slice from i, to k from a list." in
   {
-    info("""
-      |Given two indices, I and K, the slice is the list containing the elements from and including the Ith
-      |element up to but not including the Kth element of the original list. Start counting the elements with 0.
-    """.stripMargin)
-
     /*
     scala> slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
     res0: List[Symbol] = List('d, 'e, 'f, 'g)
@@ -243,28 +237,61 @@ class WorkingWithListsTest
     pending
   }
 
+  it should "be including the ith element" in
+  {
+
+  }
+
+  it should "be exluding the kth element" in
+  {
+
+  }
+
+  it should "start counting the elements with 0" in
+  {
+
+  }
+
   "P19 (**) rotate" should "Rotate a list N places to the left." in
   {
     /*
       scala> rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
       res0: List[Symbol] = List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c)
-
-      scala> rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-      res1: List[Symbol] = List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i)
     */
     pending
   }
 
+  it should "rotate to the right if the parameter is negative" in
+  {
+    /*
+    scala> rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
+    res1: List[Symbol] = List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i)
+    */
+  }
+
   "P20 (*) removeAt" should "Remove the Kth element from a list." in
   {
-    info("Return the list and the removed element in a Tuple. Elements are numbered from 0.")
-
     /*
     scala> removeAt(1, List('a, 'b, 'c, 'd))
     res0: (List[Symbol], Symbol) = (List('a, 'c, 'd),'b)
     */
 
     pending
+  }
+
+  it should "return the remaining of the list on the first part of the tuple" in
+  {
+
+  }
+
+  it should "return the removed element in the last part of the tuple" in
+  {
+
+  }
+
+  it should "start counting the elements with 0" in
+  {
+
   }
 
   "P21 (*) insertAt" should "Insert an element at a given position into a list." in
@@ -292,7 +319,7 @@ class WorkingWithListsTest
     res0: List[Symbol] = List('e, 'd, 'a)
     */
 
-    info( "Hint: Use the solution to problem P20" )
+    /* "Hint: Use the solution to problem P20" ) */
 
     pending
   }
@@ -308,7 +335,7 @@ class WorkingWithListsTest
 
   "P25 (*) randomPermute" should "Generate a random permutation of the elements of a list." in
   {
-    info("Hint: Use the solution of problem P23.")
+    /* Hint: Use the solution of problem P23. */
 
     /*
     scala> randomPermute(List('a, 'b, 'c, 'd, 'e, 'f))
@@ -320,11 +347,11 @@ class WorkingWithListsTest
 
   "P26 (**) combinations" should "Generate the combinations of K distinct objects chosen from the N elements of a list." in
   {
-    info("""
-      |In how many ways can a committee of 3 be chosen from a group of 12 people? We all know that there are C(12,3)
-      |= 220 possibilities (C(N,K) denotes the well-known binomial coefficient). For pure mathematicians, this result
-      |may be great. But we want to really generate all the possibilities.
-    """.stripMargin)
+    /*
+      In how many ways can a committee of 3 be chosen from a group of 12 people? We all know that there are C(12,3)=
+      220 possibilities (C(N,K) denotes the well-known binomial coefficient). For pure mathematicians, this result
+      may be great. But we want to really generate all the possibilities.
+    */
 
     /*
     scala> combinations(3, List('a, 'b, 'c, 'd, 'e, 'f))
@@ -336,10 +363,10 @@ class WorkingWithListsTest
 
   "P27a (**) group3a" should "Group the elements of a set into disjoint subsets." in
   {
-    info(""""
-     |In how many ways can a group of 9 people work in 3 disjoint subgroups of 2, 3 and 4 persons? Write a function
-     |that generates all the possibilities.
-    """.stripMargin)
+    /*
+     In how many ways can a group of 9 people work in 3 disjoint subgroups of 2, 3 and 4 persons? Write a function
+     that generates all the possibilities.
+    */
 
     /*
     scala> group3(List("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida"))
@@ -351,7 +378,7 @@ class WorkingWithListsTest
 
   "P27b (**) group3b" should "Group the elements of a set into disjoint subsets." in
   {
-    info(""""
+    /*
        |Generalize the above predicate in a way that we can specify a list of group sizes and the predicate will return
        |a list of groups.Note that we do not want permutations of the group members; i.e. ((Aldo, Beat), ...) is the
        |same solution as ((Beat, Aldo), ...). However, we make a difference between ((Aldo, Beat), (Carla, David), ...)
@@ -359,7 +386,7 @@ class WorkingWithListsTest
        |
        |You may find more about this combinatorial problem in a good book on discrete mathematics
        |under the term "multinomial coefficients".
-     """.stripMargin)
+    */
 
     /*
     scala> group(List(2, 2, 5), List("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida"))
@@ -372,10 +399,10 @@ class WorkingWithListsTest
 
   "P28a (**) lsort" should "Sorting a list of lists according to length of sublists." in
   {
-    info(""""
-       |We suppose that a list contains elements that are lists themselves. The objective is to sort the elements of
-       |the list according to their length. E.g. that generates all the possibilities.
-     """.stripMargin)
+    /*
+       We suppose that a list contains elements that are lists themselves. The objective is to sort the elements of
+       the list according to their length. E.g. that generates all the possibilities.
+    */
 
     /*
     scala> lsort(List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('d, 'e), List('i, 'j, 'k, 'l), List('m, 'n), List('o)))
@@ -387,7 +414,7 @@ class WorkingWithListsTest
 
   "P28b (**) lsort" should "Sorting a list of lists according to length of sublists." in
   {
-    info(""""
+    /*
        |Again, we suppose that a list contains elements that are lists themselves. But this time the objective is to
        |sort the elements according to their length frequency; i.e. in the default, sorting is done ascendingly,
        |lists with rare lengths are placed, others with a more frequent length come later.
@@ -395,7 +422,7 @@ class WorkingWithListsTest
        |Note that in the above example, the first two lists in the result have length 4 and 1 and both lengths
        |appear just once. The third and fourth lists have length 3 and there are two list of this length.
        |Finally, the last three lists have length 2. This is the most frequent length.
-     """.stripMargin)
+    */
 
     /*
     scala> lsortFreq(List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('d, 'e), List('i, 'j, 'k, 'l), List('m, 'n), List('o)))

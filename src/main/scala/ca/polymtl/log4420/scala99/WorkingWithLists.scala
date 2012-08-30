@@ -73,8 +73,9 @@ object WorkingWithLists
   {
   }
 
-  def split[A]( length: Int, in: List[A] ) =
+  def split[A]( length: Int, in: List[A] ): ( List[A], List[A] ) =
   {
+    ( in, in )
   }
 
   def slice[A]( i: Int, k: Int, in: List[A] ) =
@@ -85,8 +86,9 @@ object WorkingWithLists
   {
   }
 
-  def removeAt[A]( k: Int, in: List[A] ) =
+  def removeAt[A]( k: Int, in: List[A] ): ( List[A], A ) =
   {
+    ( in, in.head )
   }
 
   def insertAt[A]( element: A, position: Int, in: List[A] ) =
