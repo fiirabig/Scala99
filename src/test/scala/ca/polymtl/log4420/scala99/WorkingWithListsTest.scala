@@ -52,7 +52,7 @@ class WorkingWithListsTest
 
   it should "be 0 for an empty list" in
   {
-    WorkingWithLists.size( List("a") ) should be ( 6 )
+    WorkingWithLists.size( Nil ) should be ( 0 )
   }
 
   "P05(*) reverse" should "Reverse a list." in
@@ -70,7 +70,7 @@ class WorkingWithListsTest
 
         [1]: http://en.wikipedia.org/wiki/Palindrome
 
-        we don't allow word diviser and punctuation
+        we don't allow word divider and punctuation
      */
 
     assert( isPalindrome( Nil ) )
@@ -89,48 +89,46 @@ class WorkingWithListsTest
 
   "P07(**) flatten" should "Flatten a nested list structure." in
   {
-    pending
-
-    /*
-    scala> flatten(List(List(1, 1), 2, List(3, List(5, 8))))
-    res0: List[Any] = List(1, 1, 2, 3, 5, 8)
-    */
+    flatten(List(List(1), List(2))) should be ( List( 1, 2 ) )
+    flatten(List(List(1), List(2), 3)) should be ( List( 1, 2, 3 ) )
+    flatten(List(List(1, List(2, List(3))))) should be ( List( 1, 2, 3 ) )
+    flatten(List(List(1, 1), 2, List(3, List(5, 8)))) should be {
+      List(1, 1, 2, 3, 5, 8)
+    }
   }
 
-  "P08 (**) compress" should "Eliminate consecutive duplicates of list elements." in
+  "P08 (**) compress" should "Eliminate consecutive duplicates of list elements." +
+    "by Replacing repeated elements with a single copy of the element" in
   {
+    compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e) ) should be {
+      List('a, 'b, 'c, 'a, 'd, 'e)
+    }
 
-    /*
-    scala> compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
-    res0: List[Symbol] = List('a, 'b, 'c, 'a, 'd, 'e)
-    */
-
-    pending
-  }
-
-  it should "Replace repeated elements with a single copy of the element" in
-  {
-
+    compress(List("foo", "foo")) should be  {
+      List("foo")
+    }
   }
 
   it should "not change the order of the elements" in
   {
-
+    compress(List(1, 1, 1, 2, 2, 3, 3, 3, 3)) should be {
+      List(1, 2, 3)
+    }
   }
 
   "P09 (**) pack" should "Pack consecutive duplicates of list elements into sublists." in
   {
-    /*
-    scala> pack(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
-    res0: List[List[Symbol]] = List( List('a, 'a, 'a, 'a), List('b), List('c, 'c), List('a, 'a), List('d), List('e, 'e, 'e, 'e))
-    */
 
-    pending
-  }
-
-  it should "place repeated elements in separate sublists" in
-  {
-
+    pack(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be {
+      List(
+        List( 'a, 'a, 'a, 'a ),
+        List( 'b ),
+        List( 'c, 'c ),
+        List( 'a, 'a ),
+        List( 'd ),
+        List( 'e, 'e, 'e, 'e )
+      )
+    }
   }
 
   "P10 (*) encode" should "encode consecutive duplicates of elements as tuples (N, E)" in
@@ -142,32 +140,55 @@ class WorkingWithListsTest
       Given a run-length code list generated as specified in problem P10, construct its uncompressed version.
     */
 
-    /*
-    scala> encode(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
-    res0: List[(Int, Symbol)] = List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))
-    */
+    encode(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be {
+      List( (4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e) )
+    }
 
-    pending
+    encode( List( 1 ) ) should  be ( List( ( 1, 1 ) ) )
+
+    encode( List( 1, 1, 1 ) ) should be ( List( ( 3, 1 ) ) )
+
+    encode(List(1, 1, 1, 2, 2)) should be ( List( ( 3, 1 ), ( 2, 2 ) ) )
+
+    encode( List( "foo", "bar", "bar", "bar", "baz", "baz" ) ) should be {
+      List( ( 1, "foo" ), ( 3, "bar" ), ( 2, "baz" ) )
+    }
+  }
+
+  it should "return Nil if the list is empty" in {
+    encode( Nil ) should be ( Nil )
   }
 
   "P11 (*) encodeModified" should "encode like P10" in
   {
-    /*
-    scala> encodeModified(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
-    res0: List[Any] = List((4,'a), 'b, (2,'c), (2,'a), 'd, (4,'e))
-    */
+    val code = List( 1, 1, 1 )
+    encodeModified( code ) should be {
+      List( ( 3, 1 ) )
+    }
 
-    pending
+    encodeModified( List( 'a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e ) ) should be {
+      List( ( 4, 'a ), 'b ( 2, 'c ), ( 2, 'a ), 'd ( 4, 'e ) )
+    }
   }
 
-  it should "copy single elements into the result lift" in
+  it should "copy single elements into the result list" in
   {
-
+    encodeModified( List( 1 ) ) should be ( List( 1 ) )
   }
 
   it should "only transfer elements with duplicates as (N, E) terms" in
   {
+    encodeModified( List( 1, 1, 1 ) ) should be {
+      List( (3, 1) )
+    }
 
+    encodeModified( List( 'a, 'a, 'a, 'a, 'c, 'c, 'a, 'a, 'e, 'e, 'e, 'e ) ) should be {
+      List( ( 4, 'a ), ( 2, 'c ), ( 2, 'a ), ( 4, 'e ) )
+    }
+  }
+
+  it should "return Nil if the list is empty" in {
+    encode( Nil ) should be ( Nil )
   }
 
   "P12 (**) decode" should "decode a list encoded in P10" in
