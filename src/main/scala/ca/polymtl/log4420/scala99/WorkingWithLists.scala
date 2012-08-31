@@ -47,18 +47,22 @@ object WorkingWithLists
 
   def encode[A]( in: List[A] ) =
   {
+    in
   }
 
   def encodeModified[A]( in: List[A] ) =
   {
+    in
   }
 
   def decode[A]( in: List[A] ) =
   {
+    in
   }
 
   def encodeDirect[A]( in: List[A] ) =
   {
+    in
   }
 
   def duplicate[A]( in: List[A] ) =

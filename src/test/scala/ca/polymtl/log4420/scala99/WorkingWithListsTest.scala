@@ -3,6 +3,8 @@ package ca.polymtl.log4420.scala99
 import ca.polymtl.log4420.scala99.WorkingWithLists._
 import org.scalatest._
 import matchers.ShouldMatchers
+import scala._
+import scala.Some
 
 class WorkingWithListsTest
   extends FlatSpec
@@ -193,12 +195,18 @@ class WorkingWithListsTest
 
   "P12 (**) decode" should "decode a list encoded in P10" in
   {
-    /*
-      scala> decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
-      res0: List[Symbol] = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
-     */
+    decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))) should be {
+      List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
+    }
 
-    pending
+    val code = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
+    decode( encode( code ) ) should be {
+      code
+    }
+  }
+
+  it should "return Nil if the list is empty" in {
+    encode( Nil ) should be ( Nil )
   }
 
   "P13 (**) encodeDirect" should "encode a list like in P10 without using P09" in
@@ -207,172 +215,165 @@ class WorkingWithListsTest
      Implement the so-called run-length encoding data compression method directly.
     */
 
-    /*
-    scala> encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
-    res0: List[(Int, Symbol)] = List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))
-    */
+    encodeDirect( List( 'a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e ) ) should be {
+      List( ( 4, 'a ), ( 1, 'b ), ( 2, 'c ), ( 2, 'a ), ( 1, 'd ), ( 4, 'e ) )
+    }
+  }
 
-    pending
+  it should "return Nil if the list is empty" in {
+    encode( Nil ) should be ( Nil )
   }
 
   "P14 (*) duplicate" should "Duplicate all elements of a list." in
   {
-    /*
-    scala> duplicate(List('a, 'b, 'c, 'c, 'd))
-    res0: List[Symbol] = List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd)
-     */
+    duplicate( List( 'a, 'b, 'c, 'c, 'd ) ) should be {
+      List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd)
+    }
+  }
 
-    pending
+  it should "return Nil if the list is empty" in {
+    encode( Nil ) should be ( Nil )
   }
 
   "P15 (**) duplicateN" should "Duplicate the elements of a list a given number of times." in
   {
-    /*
-    scala> duplicateN(3, List('a, 'b, 'c, 'c, 'd))
-    res0: List[Symbol] = List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd)
-     */
+    duplicateN( 3, List('a, 'b, 'c, 'c, 'd) ) should be {
+      List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd)
+    }
+  }
 
-    pending
+  it should "return Nil if the list is empty" in {
+    encode( Nil ) should be ( Nil )
   }
 
   "P16 (**) drop" should "Drop every Nth element from a list." in
   {
-    /*
-    scala> drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-    res0: List[Symbol] = List('a, 'b, 'd, 'e, 'g, 'h, 'j, 'k)
-     */
+    drop( 3, List( 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k ) ) should be {
+      List( 'a, 'b, 'd, 'e, 'g, 'h, 'j, 'k )
+    }
+  }
 
-    pending
+  it should "return Nil if the list is empty" in {
+    encode( Nil ) should be ( Nil )
   }
 
   "P17 (*) split" should "Split a list into two parts." in
   {
-    info("The length of the first part is given.")
+    split( 3, List( 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k ) ) should be {
+      ( List( 'a, 'b, 'c ),List( 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k ) )
+    }
+  }
 
-    /*
-    scala> split(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-    res0: (List[Symbol], List[Symbol]) = (List('a, 'b, 'c),List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-    */
-
-    pending
+  it should "return a tuple of Nil if the list is empty" in {
+    encode( Nil ) should be ( ( Nil, Nil ) )
   }
 
   "P18 (**) slice" should "Extract a slice from i, to k from a list." in
   {
-    /*
-    scala> slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-    res0: List[Symbol] = List('d, 'e, 'f, 'g)
-    */
+    info( "start counting the elements with 0" )
 
-    pending
+    slice( 3, 7, List( 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k ) ) should be {
+      List( 'd, 'e, 'f, 'g )
+    }
   }
 
   it should "be including the ith element" in
   {
-
+    slice( 0, 0, List( 1 ) ) should be {
+      List( 1 )
+    }
   }
 
   it should "be exluding the kth element" in
   {
-
-  }
-
-  it should "start counting the elements with 0" in
-  {
-
+    slice( 0, 1, List( 1, 2 ) ) should be {
+      List( 1 )
+    }
   }
 
   "P19 (**) rotate" should "Rotate a list N places to the left." in
   {
-    /*
-      scala> rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-      res0: List[Symbol] = List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c)
-    */
-    pending
+    rotate (3, List( 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k ) ) should be {
+      List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c)
+    }
   }
 
-  it should "rotate to the right if the parameter is negative" in
+  it should "Rotate to the right if the parameter is negative." in
   {
-    /*
-    scala> rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-    res1: List[Symbol] = List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i)
-    */
+    rotate( -2, List( 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k ) ) should be {
+      List( 'j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i )
+    }
   }
 
   "P20 (*) removeAt" should "Remove the Kth element from a list." in
   {
-    /*
-    scala> removeAt(1, List('a, 'b, 'c, 'd))
-    res0: (List[Symbol], Symbol) = (List('a, 'c, 'd),'b)
-    */
+    info( "start counting the elements with 0" )
 
-    pending
+    removeAt( 1, List( 'a, 'b, 'c, 'd ) ) should be {
+      ( List( 'a, 'c, 'd ), 'b )
+    }
   }
 
   it should "return the remaining of the list on the first part of the tuple" in
   {
-
+    removeAt( 0, List( 'a, 'b, 'c, 'd ) ) should be {
+      ( List( 'b, 'c, 'd ), 'a )
+    }
   }
 
   it should "return the removed element in the last part of the tuple" in
   {
-
-  }
-
-  it should "start counting the elements with 0" in
-  {
-
+    removeAt( 3, List( 'a, 'b, 'c, 'd ) ) should be {
+      ( List( 'a, 'b, 'c, 'd ), 'd )
+    }
   }
 
   "P21 (*) insertAt" should "Insert an element at a given position into a list." in
   {
-    /*
-    scala> insertAt('new, 1, List('a, 'b, 'c, 'd))
-    res0: List[Symbol] = List('a, 'new, 'b, 'c, 'd)
-    */
-    pending
+
+    insertAt('new, 1, List('a, 'b, 'c, 'd)) should be {
+      List('a, 'new, 'b, 'c, 'd)
+    }
+
+    insertAt('new, 0, Nil) should be {
+      List('new)
+    }
+
+    insertAt('new, 1, List('a, 'b, 'c, 'd)) should be {
+      List('a, 'new, 'b, 'c, 'd)
+    }
   }
 
   "P22 (*) range" should "Create a list containing all integers within a given range." in
   {
-    /*
-    scala> range(4, 9)
-    res0: List[Int] = List(4, 5, 6, 7, 8, 9)
-    */
-    pending
+    range(4, 9) should  be {
+      List( 4, 5, 6, 7, 8, 9 )
+    }
   }
 
   "P23 (**) randomSelect" should "Extract a given number of randomly selected elements from a list." in
   {
-    /*
-    scala> randomSelect(3, List('a, 'b, 'c, 'd, 'f, 'g, 'h))
-    res0: List[Symbol] = List('e, 'd, 'a)
-    */
+    randomSelect(3, List('a, 'b, 'c, 'd, 'f, 'g, 'h)) should be {
+      List('e, 'd, 'a)
+    }
 
     /* "Hint: Use the solution to problem P20" ) */
-
-    pending
   }
 
   "P24 (*) lotto" should "Draw N different random numbers from the set 1..M." in
   {
-    /*
-    scala> lotto(6, 49)
-    res0: List[Int] = List(23, 1, 17, 33, 21, 37)
-    */
-    pending
+    lotto(6, 49) should be {
+      List(23, 1, 17, 33, 21, 37)
+    }
   }
 
   "P25 (*) randomPermute" should "Generate a random permutation of the elements of a list." in
   {
+    randomPermute(List('a, 'b, 'c, 'd, 'e, 'f)) should be {
+      List('b, 'a, 'd, 'c, 'e, 'f)
+    }
+
     /* Hint: Use the solution of problem P23. */
-
-    /*
-    scala> randomPermute(List('a, 'b, 'c, 'd, 'e, 'f))
-    res0: List[Symbol] = List('b, 'a, 'd, 'c, 'e, 'f)
-    */
-
-    pending
   }
 
   "P26 (**) combinations" should "Generate the combinations of K distinct objects chosen from the N elements of a list." in
@@ -383,12 +384,22 @@ class WorkingWithListsTest
       may be great. But we want to really generate all the possibilities.
     */
 
-    /*
-    scala> combinations(3, List('a, 'b, 'c, 'd, 'e, 'f))
-    res0: List[List[Symbol]] = List(List('a, 'b, 'c), List('a, 'b, 'd), List('a, 'b, 'e), ...
-    */
+    val k = 3
+    val s = List( 'a, 'b, 'c, 'd, 'e, 'f )
+    val result = combinations( k, s )
 
-    pending
+    assert( result.contains( List('a, 'b, 'c) ) )
+    assert( result.contains( List('a, 'b, 'd) ) )
+    assert( result.contains( List('a, 'b, 'e) ) )
+
+    def binomialCoefficient( k: Int, n: Int ): Int = {
+
+      def fact(n:Int):Int = if( n == 0 ) 1 else n * factorial( n - 1 )
+
+      fact( n ) / ( fact( k ) * fact( n - k) )
+    }
+
+    result.size should be ( binomialCoefficient( k, s.size ) )
   }
 
   "P27a (**) group3a" should "Group the elements of a set into disjoint subsets." in
