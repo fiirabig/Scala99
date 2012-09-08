@@ -394,7 +394,7 @@ class WorkingWithListsTest
 
     def binomialCoefficient( k: Int, n: Int ): Int = {
 
-      def fact(n:Int):Int = if( n == 0 ) 1 else n * factorial( n - 1 )
+      def fact(n:Int):Int = if( n == 0 ) 1 else n * fact( n - 1 )
 
       fact( n ) / ( fact( k ) * fact( n - k) )
     }
