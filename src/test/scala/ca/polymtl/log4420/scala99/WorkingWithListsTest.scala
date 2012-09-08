@@ -169,7 +169,7 @@ class WorkingWithListsTest
     }
 
     encodeModified( List( 'a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e ) ) should be {
-      List( ( 4, 'a ), 'b ( 2, 'c ), ( 2, 'a ), 'd ( 4, 'e ) )
+      List( ( 4, 'a ), 'b, ( 2, 'c ), ( 2, 'a ), 'd, ( 4, 'e ) )
     }
   }
 
@@ -190,7 +190,7 @@ class WorkingWithListsTest
   }
 
   it should "return Nil if the list is empty" in {
-    encode( Nil ) should be ( Nil )
+    encodeModified( Nil ) should be ( Nil )
   }
 
   "P12 (**) decode" should "decode a list encoded in P10" in
@@ -206,7 +206,7 @@ class WorkingWithListsTest
   }
 
   it should "return Nil if the list is empty" in {
-    encode( Nil ) should be ( Nil )
+    decode( Nil ) should be ( Nil )
   }
 
   "P13 (**) encodeDirect" should "encode a list like in P10 without using P09" in
@@ -221,7 +221,7 @@ class WorkingWithListsTest
   }
 
   it should "return Nil if the list is empty" in {
-    encode( Nil ) should be ( Nil )
+    encodeDirect( Nil ) should be ( Nil )
   }
 
   "P14 (*) duplicate" should "Duplicate all elements of a list." in
@@ -232,7 +232,7 @@ class WorkingWithListsTest
   }
 
   it should "return Nil if the list is empty" in {
-    encode( Nil ) should be ( Nil )
+    duplicate( Nil ) should be ( Nil )
   }
 
   "P15 (**) duplicateN" should "Duplicate the elements of a list a given number of times." in
@@ -243,7 +243,7 @@ class WorkingWithListsTest
   }
 
   it should "return Nil if the list is empty" in {
-    encode( Nil ) should be ( Nil )
+    duplicateN( 1, Nil ) should be ( Nil )
   }
 
   "P16 (**) drop" should "Drop every Nth element from a list." in
@@ -254,7 +254,7 @@ class WorkingWithListsTest
   }
 
   it should "return Nil if the list is empty" in {
-    encode( Nil ) should be ( Nil )
+    drop( 1, Nil ) should be ( Nil )
   }
 
   "P17 (*) split" should "Split a list into two parts." in
@@ -265,7 +265,7 @@ class WorkingWithListsTest
   }
 
   it should "return a tuple of Nil if the list is empty" in {
-    encode( Nil ) should be ( ( Nil, Nil ) )
+    split( 1, Nil ) should be ( ( Nil, Nil ) )
   }
 
   "P18 (**) slice" should "Extract a slice from i, to k from a list." in
@@ -279,7 +279,7 @@ class WorkingWithListsTest
 
   it should "be including the ith element" in
   {
-    slice( 0, 0, List( 1 ) ) should be {
+    slice( 0, 1, List( 1 ) ) should be {
       List( 1 )
     }
   }
@@ -324,7 +324,7 @@ class WorkingWithListsTest
   it should "return the removed element in the last part of the tuple" in
   {
     removeAt( 3, List( 'a, 'b, 'c, 'd ) ) should be {
-      ( List( 'a, 'b, 'c, 'd ), 'd )
+      ( List( 'a, 'b, 'c ), 'd )
     }
   }
 
