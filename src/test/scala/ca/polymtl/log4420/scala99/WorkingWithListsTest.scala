@@ -354,15 +354,20 @@ class WorkingWithListsTest
 
   "P23 (**) randomSelect" should "Extract a given number of elements from a list." in
   {
-
     val l = List('a, 'b, 'c, 'd, 'f, 'g, 'h)
     val r = randomSelect(3, l )
 
-    ( ( List.empty[Symbol], l ) /: r ) {
-      case ( ( pop, rest ), x ) => {
-        assert( rest.contains( x) )
+    assertExtract( l, r )
+  }
 
-        val (l,r) = rest.span( _ == x )
+  def assertExtract[A]( in: List[A], res: List[A] )
+  {
+    ( ( List.empty[A], in ) /: res ) {
+      case ( ( pop, rest ), x ) => {
+
+        assert( rest.contains( x ), "we can only extract an element once" )
+
+        val ( l, r ) = rest.span( _ == x )
 
         ( x :: pop, l.tail ::: r  )
       }
@@ -371,17 +376,22 @@ class WorkingWithListsTest
 
   it should "Extract those number randomly following a uniform distribution with a standar deviation lesser than 0.01" in
   {
-    import scala.collection.mutable.HashMap
+    import collection.mutable.HashMap
 
     val l = List('a, 'b, 'c, 'd, 'f, 'g, 'h)
     val distribution = new HashMap[List[Symbol], Int]
 
     for( x <- ( 1 to 1000 ) )
     {
-      result = randomSelect( 3, l )
+      val result = randomSelect( 3, l )
       distribution( result ) = distribution.getOrElse( result, 0 ) + 1
     }
 
+    assertUniformDistribution( distribution )
+  }
+
+  def assertUniformDistribution[A]( distribution: collection.mutable.HashMap[A,Int] )
+  {
     val average = ( 0 /: distribution ) {
       case ( acc, ( _ , v ) ) => {
         acc + v
@@ -397,20 +407,48 @@ class WorkingWithListsTest
     assert( std < 0.01 )
   }
 
-  "P24 (*) lotto" should "Draw N different random numbers from the set 1..M." in
+  "P24 (*) lotto" should "Draw N different numbers from the set 1..M." in
   {
-    lotto(6, 49) should be {
-      List(23, 1, 17, 33, 21, 37)
-    }
+    val M = 49
+    assertExtract( (1 to M).toList, lotto( 6, M ) )
   }
 
-  "P25 (*) randomPermute" should "Generate a random permutation of the elements of a list." in
+  it should "Extract randomly following a uniform distribution with a standar deviation lesser than 0.01" in
   {
-    randomPermute(List('a, 'b, 'c, 'd, 'e, 'f)) should be {
-      List('b, 'a, 'd, 'c, 'e, 'f)
+    import collection.mutable.HashMap
+
+    val distribution = new HashMap[List[Int], Int]
+
+    for( x <- ( 1 to 1000 ) )
+    {
+      val result = lotto( 6, 49 )
+      distribution( result ) = distribution.getOrElse( result, 0 ) + 1
     }
 
+    assertUniformDistribution( distribution )
+  }
+
+  "P25 (*) randomPermute" should "Generate a permutation of the elements of a list." in
+  {
+    val li = List( 'a, 'b, 'c, 'd, 'e, 'f )
+    assertExtract( li, randomPermute( li ) ) should be( Nil )
+
     /* Hint: Use the solution of problem P23. */
+  }
+
+  it should "Generate randomly following a uniform distribution with a standar deviation lesser than 0.01" in
+  {
+    import collection.mutable.HashMap
+
+    val distribution = new HashMap[List[Symbol], Int]
+
+    for( x <- ( 1 to 1000 ) )
+    {
+      val result = randomPermute(List('a, 'b, 'c, 'd, 'e, 'f))
+      distribution( result ) = distribution.getOrElse( result, 0 ) + 1
+    }
+
+    assertUniformDistribution( distribution )
   }
 
   "P26 (**) combinations" should "Generate the combinations of K distinct objects chosen from the N elements of a list." in
