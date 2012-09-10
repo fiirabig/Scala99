@@ -4,6 +4,7 @@ import ca.polymtl.log4420.scala99.WorkingWithLists._
 import org.scalatest._
 import matchers.ShouldMatchers
 import scala._
+import collection.mutable
 import scala.Some
 
 class WorkingWithListsTest
@@ -351,13 +352,49 @@ class WorkingWithListsTest
     }
   }
 
-  "P23 (**) randomSelect" should "Extract a given number of randomly selected elements from a list." in
+  "P23 (**) randomSelect" should "Extract a given number of elements from a list." in
   {
-    randomSelect(3, List('a, 'b, 'c, 'd, 'f, 'g, 'h)) should be {
-      List('e, 'd, 'a)
+
+    val l = List('a, 'b, 'c, 'd, 'f, 'g, 'h)
+    val r = randomSelect(3, l )
+
+    ( ( List.empty[Symbol], l ) /: r ) {
+      case ( ( pop, rest ), x ) => {
+        assert( rest.contains( x) )
+
+        val (l,r) = rest.span( _ == x )
+
+        ( x :: pop, l.tail ::: r  )
+      }
+    }
+  }
+
+  it should "Extract those number randomly following a uniform distribution with a standar deviation lesser than 0.01" in
+  {
+    import scala.collection.mutable.HashMap
+
+    val l = List('a, 'b, 'c, 'd, 'f, 'g, 'h)
+    val distribution = new HashMap[List[Symbol], Int]
+
+    for( x <- ( 1 to 1000 ) )
+    {
+      result = randomSelect( 3, l )
+      distribution( result ) = distribution.getOrElse( result, 0 ) + 1
     }
 
-    /* "Hint: Use the solution to problem P20" ) */
+    val average = ( 0 /: distribution ) {
+      case ( acc, ( _ , v ) ) => {
+        acc + v
+      }
+    } / distribution.size
+
+    val std = ( 0 /: distribution ) {
+      case ( acc, ( _, v ) ) => {
+        acc + math.abs( average - v )
+      }
+    }
+
+    assert( std < 0.01 )
   }
 
   "P24 (*) lotto" should "Draw N different random numbers from the set 1..M." in
