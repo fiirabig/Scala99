@@ -360,18 +360,18 @@ class WorkingWithListsTest
     assertExtract( l, r )
   }
 
-  def assertExtract[A]( in: List[A], res: List[A] )
+  def assertExtract[A]( in: List[A], res: List[A] ) =
   {
     ( ( List.empty[A], in ) /: res ) {
       case ( ( pop, rest ), x ) => {
 
         assert( rest.contains( x ), "we can only extract an element once" )
 
-        val ( l, r ) = rest.span( _ == x )
+        val ( l, r ) = rest.partition( _ == x )
 
         ( x :: pop, l.tail ::: r  )
       }
-    }
+    }._2
   }
 
   it should "Extract those number randomly following a uniform distribution with a standar deviation lesser than 0.01" in
