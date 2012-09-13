@@ -380,21 +380,6 @@ class WorkingWithListsTest
     assertExtract( (1 to M).toList, lotto( 6, M ) )
   }
 
-  it should "Extract randomly following a uniform distribution with a standar deviation lesser than 0.01" in
-  {
-    import collection.mutable.HashMap
-
-    val distribution = new HashMap[List[Int], Int]
-
-    for( x <- ( 1 to 1000 ) )
-    {
-      val result = lotto( 6, 49 )
-      distribution( result ) = distribution.getOrElse( result, 0 ) + 1
-    }
-
-    assertUniformDistribution( distribution )
-  }
-
   "P25 (*) randomPermute" should "Generate a permutation of the elements of a list." in
   {
     val li = List( 'a, 'b, 'c, 'd, 'e, 'f )
